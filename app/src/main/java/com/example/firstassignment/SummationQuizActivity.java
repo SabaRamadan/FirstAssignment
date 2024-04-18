@@ -33,7 +33,7 @@ public class SummationQuizActivity extends AppCompatActivity {
 
         initializeViews();
         initializeSharedPreferences();
-        database = new QuestionDatabase();  // Create an instance of com.example.firstassignment.QuestionDatabase
+        database = new QuestionDatabase();
         questions = database.getAllQuestions();
         if (!questions.isEmpty()) {
             displayQuestion(questions.get(currentQuestionIndex));
@@ -64,12 +64,12 @@ public class SummationQuizActivity extends AppCompatActivity {
         List<String> options = new ArrayList<>();
         // Generate random wrong answers for variety
         while (options.size() < 3) {
-            int wrongAnswer = (int) (Math.random() * 10) + 1;  // Random wrong answers between 1 and 10
+            int wrongAnswer = (int) (Math.random() * 10) + 1;
             if (wrongAnswer != correctAnswer && !options.contains(String.valueOf(wrongAnswer))) {
                 options.add(String.valueOf(wrongAnswer));
             }
         }
-        options.add(String.valueOf(correctAnswer));  // Add correct answer
+        options.add(String.valueOf(correctAnswer));
         Collections.shuffle(options);  // Shuffle options to randomize position
         return options;
     }
@@ -88,8 +88,8 @@ public class SummationQuizActivity extends AppCompatActivity {
 
                 if (currentQuestionIndex < questions.size() - 1) {
                     currentQuestionIndex++;  // Move to the next question
-                    displayQuestion(questions.get(currentQuestionIndex));  // Display the next question
-                    quizOptions.setItemChecked(position, false);  // Reset selection
+                    displayQuestion(questions.get(currentQuestionIndex));
+                    quizOptions.setItemChecked(position, false);
                 } else {
                     showCompletionDialog();
                 }
@@ -113,14 +113,14 @@ public class SummationQuizActivity extends AppCompatActivity {
 
     private void completeQuiz() {
         saveQuizResults(correctAnswersCount); // Save results
-        Intent intent = new Intent(this, ProgressActivity.class); // Assume you have a ProgressActivity to show results
+        Intent intent = new Intent(this, ProgressActivity.class);
         startActivity(intent);
     }
 
 
 
     private void restartQuiz() {
-        correctAnswersCount = 0; // Reset correct answers count
+        correctAnswersCount = 0;
         currentQuestionIndex = 0;
         displayQuestion(questions.get(currentQuestionIndex)); // Display the first question again
         quizOptions.clearChoices();

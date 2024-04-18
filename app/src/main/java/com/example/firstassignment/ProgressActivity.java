@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,14 +33,17 @@ public class ProgressActivity extends AppCompatActivity {
     private void displayScores() {
         SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
         int score = prefs.getInt("lastScore", -1);
+        int totalScore = prefs.getInt("totalScore", 0);
+        int totalQuizzesTaken = prefs.getInt("totalQuizzesTaken", 0);
+
+        Log.d("ProgressActivity", "Loaded scores: Score: " + score + ", Total Score: " + totalScore + ", Quizzes Taken: " + totalQuizzesTaken);
+
         if (score == -1) {
             tvScore.setText("No quizzes taken yet.");
         } else {
             tvScore.setText("Last Quiz Score: " + score);
         }
 
-        int totalScore = prefs.getInt("totalScore", 0);
-        int totalQuizzesTaken = prefs.getInt("totalQuizzesTaken", 0);
         if (totalQuizzesTaken > 0) {
             int averageScore = totalScore / totalQuizzesTaken;
             tvAverageScore.setText("Average Score: " + averageScore);
@@ -48,9 +52,11 @@ public class ProgressActivity extends AppCompatActivity {
         }
     }
 
-
     private void setupButtonListener() {
-        btnBackToMain.setOnClickListener(view -> finish());
+        btnBackToMain.setOnClickListener(view -> {
+            Toast.makeText(this, "Returning to Main Menu", Toast.LENGTH_SHORT).show();
+            finish();
+        });
     }
 
     @Override
@@ -58,5 +64,4 @@ public class ProgressActivity extends AppCompatActivity {
         super.onResume();
         displayScores();  // Refresh scores when the activity is resumed
     }
-
 }
