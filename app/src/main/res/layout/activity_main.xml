@@ -1,14 +1,54 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D6C9A1"
+    android:background="#EAE5D5"
     android:orientation="vertical"
-    android:padding="16dp" >
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/welcomtxt"
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="Summation Station"
+        android:textColor="#3A3507"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/btnStartLessons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Start Learning Summation"
+        android:textColor="#FFFFFF" />
+
+
+    <Button
+        android:id="@+id/btnTakeQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Take a Summation Quiz"
+        android:textColor="#FFFFFF" />
+
+
+    <Button
+        android:id="@+id/btnViewProgress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="View Progress"
+        android:textColor="#FFFFFF" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/sabaappsum" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>
