@@ -28,9 +28,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         btnViewProgress.setOnClickListener(v -> {
-            // Intent to start ProgressActivity
             startActivity(new Intent(MainActivity.this, ProgressActivity.class));
         });
+
+
+
     }
 
 }

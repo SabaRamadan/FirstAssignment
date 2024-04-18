@@ -1,5 +1,6 @@
 package com.example.firstassignment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -86,5 +87,22 @@ public class SummationQuizActivity extends AppCompatActivity {
                 Toast.makeText(this, "Please select an answer before submitting.", Toast.LENGTH_LONG).show();
             }
         });
+
     }
+    private void showCompletionDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle("Quiz Completed")
+                .setMessage("You've completed all questions! Do you want to restart the quiz?")
+                .setPositiveButton("Restart", (dialog, which) -> restartQuiz())
+                .setNegativeButton("Exit", (dialog, which) -> finish())
+                .show();
+    }
+
+    private void restartQuiz() {
+        currentQuestionIndex = 0;
+        displayQuestion(questions.get(currentQuestionIndex));
+        quizOptions.clearChoices();
+        quizOptions.requestLayout();
+    }
+
 }
