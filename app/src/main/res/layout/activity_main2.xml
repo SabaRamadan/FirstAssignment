@@ -10,18 +10,22 @@
         android:id="@+id/textViewInstructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center|top"
-        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:text="Learn how to add two numbers!"
         android:textSize="20sp"
         android:textStyle="bold" />
 
+
     <ImageView
         android:id="@+id/sumtable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
+        android:layout_width="391dp"
+        android:layout_height="540dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter"
         android:src="@drawable/sumtable" />
 
 </LinearLayout>
