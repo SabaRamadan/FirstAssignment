@@ -2,6 +2,7 @@ package com.example.firstassignment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -22,6 +23,8 @@ public class SummationQuizActivity extends AppCompatActivity {
     private QuestionDatabase database;
     private List<SummationQuestion> questions;
     private int currentQuestionIndex = 0;
+    private int correctAnswersCount = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,38 +74,69 @@ public class SummationQuizActivity extends AppCompatActivity {
         return options;
     }
 
+
     private void setupButtonListener() {
         submitAnswer.setOnClickListener(v -> {
             int position = quizOptions.getCheckedItemPosition();
             if (position != -1) {
+                // Check if the selected answer is correct
+                String selectedOption = quizOptions.getItemAtPosition(position).toString();
+                int correctAnswer = questions.get(currentQuestionIndex).getAnswer();
+                if (Integer.parseInt(selectedOption) == correctAnswer) {
+                    correctAnswersCount++;
+                }
+
                 if (currentQuestionIndex < questions.size() - 1) {
                     currentQuestionIndex++;  // Move to the next question
                     displayQuestion(questions.get(currentQuestionIndex));  // Display the next question
                     quizOptions.setItemChecked(position, false);  // Reset selection
                 } else {
-                    Toast.makeText(this, "You've completed the quiz!", Toast.LENGTH_SHORT).show();
-                    // Optionally reset the quiz or change activities
+                    showCompletionDialog();
                 }
             } else {
                 Toast.makeText(this, "Please select an answer before submitting.", Toast.LENGTH_LONG).show();
             }
         });
-
     }
+
+
     private void showCompletionDialog() {
         new AlertDialog.Builder(this)
                 .setTitle("Quiz Completed")
-                .setMessage("You've completed all questions! Do you want to restart the quiz?")
+                .setMessage("You've completed all questions! Do you want to restart the quiz or view your results?")
                 .setPositiveButton("Restart", (dialog, which) -> restartQuiz())
-                .setNegativeButton("Exit", (dialog, which) -> finish())
+                .setNegativeButton("View Results", (dialog, which) -> {
+                    completeQuiz();  // Calculate score and navigate to results
+                })
                 .show();
     }
 
+    private void completeQuiz() {
+        saveQuizResults(correctAnswersCount); // Save results
+        Intent intent = new Intent(this, ProgressActivity.class); // Assume you have a ProgressActivity to show results
+        startActivity(intent);
+    }
+
+
+
     private void restartQuiz() {
+        correctAnswersCount = 0; // Reset correct answers count
         currentQuestionIndex = 0;
-        displayQuestion(questions.get(currentQuestionIndex));
+        displayQuestion(questions.get(currentQuestionIndex)); // Display the first question again
         quizOptions.clearChoices();
         quizOptions.requestLayout();
     }
+
+    private void saveQuizResults(int score) {
+        SharedPreferences prefs = getSharedPreferences("QuizPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("lastScore", score);
+        int totalScore = prefs.getInt("totalScore", 0) + score;
+        int totalQuizzesTaken = prefs.getInt("totalQuizzesTaken", 0) + 1;
+        editor.putInt("totalScore", totalScore);
+        editor.putInt("totalQuizzesTaken", totalQuizzesTaken);
+        editor.apply();
+    }
+
 
 }

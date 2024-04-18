@@ -36,4 +36,6 @@ public class SummationQuestion {
     public String toString() {
         return question + " Answer: " + answer;
     }
+
+
 }
